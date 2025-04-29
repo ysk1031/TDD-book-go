@@ -4,14 +4,12 @@ import "testing"
 
 func TestMultiplication(t *testing.T) {
 	five := NewDollar(5)
-	product := five.Times(2)
-	if product.amount != 10 {
-		t.Errorf("Expected amount to be 10, but got %d", product.amount)
+	if five.Times(2) != NewDollar(10) {
+		t.Errorf("Expected amount to be 10, but got %d", five.Times(2).amount)
 	}
 
-	product = five.Times(3)
-	if product.amount != 15 {
-		t.Errorf("Expected amount to be 15, but got %d", product.amount)
+	if five.Times(3) != NewDollar(15) {
+		t.Errorf("Expected amount to be 15, but got %d", five.Times(3).amount)
 	}
 }
 
