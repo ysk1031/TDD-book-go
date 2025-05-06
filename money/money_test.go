@@ -7,7 +7,6 @@ func TestMultiplication(t *testing.T) {
 	if five.Times(2) != NewDollar(10) {
 		t.Errorf("Expected amount to be 10, but got %d", five.Times(2).amount)
 	}
-
 	if five.Times(3) != NewDollar(15) {
 		t.Errorf("Expected amount to be 15, but got %d", five.Times(3).amount)
 	}
@@ -17,9 +16,15 @@ func TestEquality(t *testing.T) {
 	if !(NewDollar(5)).Equals(NewDollar(5)) {
 		t.Errorf("Expected dollars to be equal, but they are not")
 	}
-
 	if NewDollar(5).Equals(NewDollar(6)) {
 		t.Errorf("Expected dollars to be not equal, but they are")
+	}
+
+	if !(NewFranc(5).Equals(NewFranc(5))) {
+		t.Errorf("Expected francs to be equal, but they are not")
+	}
+	if NewFranc(5).Equals(NewFranc(6)) {
+		t.Errorf("Expected francs to be not equal, but they are")
 	}
 }
 
@@ -28,7 +33,6 @@ func TestFrancMultiplication(t *testing.T) {
 	if five.Times(2) != NewFranc(10) {
 		t.Errorf("Expected amount to be 10, but got %d", five.Times(2).amount)
 	}
-
 	if five.Times(3) != NewFranc(15) {
 		t.Errorf("Expected amount to be 15, but got %d", five.Times(3).amount)
 	}
