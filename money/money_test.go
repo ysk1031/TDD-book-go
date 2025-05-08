@@ -33,3 +33,13 @@ func TestCurrency(t *testing.T) {
 		t.Errorf("Expected currency to be CHF, but got %s", NewFranc(1).Currency())
 	}
 }
+
+func TestSimpleAddition(t *testing.T) {
+	five := NewDollar(5)
+	sum := five.plus(five)
+	bank := NewBank()
+	reduced := bank.reduce(sum, "USD")
+	if reduced != NewDollar(10) {
+		t.Errorf("Expected reduced amount to be 10, but got %d", reduced.amount)
+	}
+}
