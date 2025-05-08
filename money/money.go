@@ -25,12 +25,13 @@ func (m Money) Currency() string {
 	return m.concurrency
 }
 
-func (m Money) plus(addend Money) Expression {
+func (m Money) Plus(addend Money) Expression {
 	return NewSum(m, addend)
 }
 
-func (m Money) Reduce(to string) Money {
-	return m
+func (m Money) Reduce(bank Bank, to string) Money {
+	rate := bank.Rate(m.concurrency, to)
+	return NewMoney(m.amount/rate, to)
 }
 
 // Dollar

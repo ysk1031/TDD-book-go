@@ -36,7 +36,7 @@ func TestCurrency(t *testing.T) {
 
 func TestSimpleAddition(t *testing.T) {
 	five := NewDollar(5)
-	sum := five.plus(five)
+	sum := five.Plus(five)
 	bank := NewBank()
 	reduced := bank.Reduce(sum, "USD")
 	if reduced != NewDollar(10) {
@@ -46,7 +46,7 @@ func TestSimpleAddition(t *testing.T) {
 
 func TestPlusReturnsSum(t *testing.T) {
 	five := NewDollar(5)
-	result := five.plus(five)
+	result := five.Plus(five)
 	sum, ok := result.(Sum)
 	if !ok {
 		t.Errorf("Expected result to be of type Sum, but got %T", result)
@@ -75,5 +75,21 @@ func TestReduceMoney(t *testing.T) {
 	result := bank.Reduce(NewDollar(1), "USD")
 	if result != NewDollar(1) {
 		t.Errorf("Expected reduced amount to be %v, but got %v", NewDollar(1), result)
+	}
+}
+
+func TestReduceMoneyDifferentCurrency(t *testing.T) {
+	bank := NewBank()
+	bank.AddRate("CHF", "USD", 2)
+	result := bank.Reduce(NewFranc(2), "USD")
+	if result != NewDollar(1) {
+		t.Errorf("Expected reduced amount to be %v, but got %v", NewDollar(1), result)
+	}
+}
+
+func TestIdentityRate(t *testing.T) {
+	rate := NewBank().Rate("USD", "USD")
+	if rate != 1 {
+		t.Errorf("Expected identity rate to be 1, but got %d", rate)
 	}
 }
