@@ -38,8 +38,42 @@ func TestSimpleAddition(t *testing.T) {
 	five := NewDollar(5)
 	sum := five.plus(five)
 	bank := NewBank()
-	reduced := bank.reduce(sum, "USD")
+	reduced := bank.Reduce(sum, "USD")
 	if reduced != NewDollar(10) {
 		t.Errorf("Expected reduced amount to be 10, but got %d", reduced.amount)
+	}
+}
+
+func TestPlusReturnsSum(t *testing.T) {
+	five := NewDollar(5)
+	result := five.plus(five)
+	sum, ok := result.(Sum)
+	if !ok {
+		t.Errorf("Expected result to be of type Sum, but got %T", result)
+		return
+	}
+
+	if sum.augend != five {
+		t.Errorf("Expected augend to be %v, but got %v", five, sum.augend)
+	}
+	if sum.addend != five {
+		t.Errorf("Expected addend to be %v, but got %v", five, sum.addend)
+	}
+}
+
+func TestReduceSum(t *testing.T) {
+	sum := NewSum(NewDollar(3), NewDollar(4))
+	bank := NewBank()
+	result := bank.Reduce(sum, "USD")
+	if result != NewDollar(7) {
+		t.Errorf("Expected reduced amount to be 7, but got %d", result.amount)
+	}
+}
+
+func TestReduceMoney(t *testing.T) {
+	bank := NewBank()
+	result := bank.Reduce(NewDollar(1), "USD")
+	if result != NewDollar(1) {
+		t.Errorf("Expected reduced amount to be %v, but got %v", NewDollar(1), result)
 	}
 }

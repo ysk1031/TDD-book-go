@@ -26,7 +26,11 @@ func (m Money) Currency() string {
 }
 
 func (m Money) plus(addend Money) Expression {
-	return NewMoney(m.amount+addend.amount, m.concurrency)
+	return NewSum(m, addend)
+}
+
+func (m Money) Reduce(to string) Money {
+	return m
 }
 
 // Dollar
