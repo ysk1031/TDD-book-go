@@ -10,7 +10,7 @@ func NewMoney(amount int, name string) Money {
 	return Money{amount: amount, concurrency: name}
 }
 
-func (m Money) Times(multiplier int) Money {
+func (m Money) Times(multiplier int) Expression {
 	return NewMoney(m.amount*multiplier, m.concurrency)
 }
 
@@ -25,7 +25,7 @@ func (m Money) Currency() string {
 	return m.concurrency
 }
 
-func (m Money) Plus(addend Money) Expression {
+func (m Money) Plus(addend Expression) Expression {
 	return NewSum(m, addend)
 }
 

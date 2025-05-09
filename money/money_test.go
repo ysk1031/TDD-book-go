@@ -5,10 +5,10 @@ import "testing"
 func TestMultiplication(t *testing.T) {
 	five := NewDollar(5)
 	if five.Times(2) != NewDollar(10) {
-		t.Errorf("Expected amount to be 10, but got %d", five.Times(2).amount)
+		t.Errorf("Expected amount to be %v, but got %v", NewDollar(10), five.Times(2))
 	}
 	if five.Times(3) != NewDollar(15) {
-		t.Errorf("Expected amount to be 15, but got %d", five.Times(3).amount)
+		t.Errorf("Expected amount to be %v, but got %v", NewDollar(15), five.Times(3))
 	}
 }
 
@@ -91,5 +91,16 @@ func TestIdentityRate(t *testing.T) {
 	rate := NewBank().Rate("USD", "USD")
 	if rate != 1 {
 		t.Errorf("Expected identity rate to be 1, but got %d", rate)
+	}
+}
+
+func TestMixedAddition(t *testing.T) {
+	var fiveDollars Expression = NewDollar(5)
+	var tenFrancs Expression = NewFranc(10)
+	bank := NewBank()
+	bank.AddRate("CHF", "USD", 2)
+	result := bank.Reduce(fiveDollars.Plus(tenFrancs), "USD")
+	if result != NewDollar(10) {
+		t.Errorf("Expected reduced amount to be %v, but got %v", NewDollar(10), result)
 	}
 }
