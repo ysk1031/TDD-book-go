@@ -2,27 +2,20 @@ package money
 
 // Money
 type Money struct {
-	amount      int
-	concurrency string
+	amount   int
+	currency string
 }
 
 func NewMoney(amount int, name string) Money {
-	return Money{amount: amount, concurrency: name}
+	return Money{amount: amount, currency: name}
 }
 
 func (m Money) Times(multiplier int) Expression {
-	return NewMoney(m.amount*multiplier, m.concurrency)
-}
-
-func (m Money) Equals(object any) bool {
-	if otherMoney, ok := object.(Money); ok {
-		return m.amount == otherMoney.amount && m.concurrency == otherMoney.concurrency
-	}
-	return false
+	return NewMoney(m.amount*multiplier, m.currency)
 }
 
 func (m Money) Currency() string {
-	return m.concurrency
+	return m.currency
 }
 
 func (m Money) Plus(addend Expression) Expression {
@@ -30,7 +23,7 @@ func (m Money) Plus(addend Expression) Expression {
 }
 
 func (m Money) Reduce(bank Bank, to string) Money {
-	rate := bank.Rate(m.concurrency, to)
+	rate := bank.Rate(m.currency, to)
 	return NewMoney(m.amount/rate, to)
 }
 

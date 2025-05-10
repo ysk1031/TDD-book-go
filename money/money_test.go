@@ -13,14 +13,14 @@ func TestMultiplication(t *testing.T) {
 }
 
 func TestEquality(t *testing.T) {
-	if !(NewDollar(5)).Equals(NewDollar(5)) {
+	if NewDollar(5) != NewDollar(5) {
 		t.Errorf("Expected dollars to be equal, but they are not")
 	}
-	if NewDollar(5).Equals(NewDollar(6)) {
+	if NewDollar(5) == NewDollar(6) {
 		t.Errorf("Expected dollars to be not equal, but they are")
 	}
 
-	if NewDollar(5).Equals(NewFranc(5)) {
+	if NewDollar(5) == NewFranc(5) {
 		t.Errorf("Expected dollar and franc to be not equal, but they are")
 	}
 }
